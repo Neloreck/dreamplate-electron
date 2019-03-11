@@ -1,0 +1,24 @@
+{
+  "config": {
+  },
+  "scripts": {
+    "clean": "npx rimraf ./target && echo 'Target cleaned up.'",
+    "clean:build": "npx rimraf ./target/ && echo \"Target cleaned up: dist/${NODE_ENV:-production}.\"",
+    "purge": "npx rimraf ./target && rimraf ./node_modules && echo 'Project purged.'",
+    "=============================================================================================================": "",
+    "build": [
+      "npm run cli clean:build",
+      "ts-node --project ./cli/tsconfig.json ./cli/build_renderer/BuildRunner.ts",
+      "ts-node --project ./cli/tsconfig.json ./cli/build_main/BuildRunner.ts"
+    ],
+    "build-main": "ts-node --project ./cli/tsconfig.json ./cli/build_main/BuildRunner.ts",
+    "build-renderer": "ts-node --project ./cli/tsconfig.json ./cli/build_renderer/BuildRunner.ts",
+    "============================================================================================================": "=",
+    "test": [
+      "npm run cli lint",
+      "npm run cli jest"
+    ],
+    "jest": "npx ts-node --project ./cli/tsconfig.json ./cli/test/TestRunner.ts",
+    "lint": "npx tslint --project ./src/"
+  }
+}
