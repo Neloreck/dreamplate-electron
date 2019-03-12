@@ -1,7 +1,6 @@
 import { CommandRunner, EntryPoint } from "./_cli";
 
-// tslint:disable: no-var-requires
-const cliConfig = require("./cli.json");
+import * as cliConfig from "./cli.json";
 
 @EntryPoint()
 export class CliRunner {

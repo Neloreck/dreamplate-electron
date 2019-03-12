@@ -5,6 +5,9 @@ import { EntryPoint } from "@Lib/decorators";
 import { AbstractWindow } from "@Lib/electron";
 import { cliLog } from "@Lib/utils";
 
+// Data.
+import { applicationConfig } from "@Application/configs/ApplicationConfig";
+
 // View.
 import { MainWindow } from "@Application/windows/MainWindow";
 
@@ -15,7 +18,7 @@ export class Application {
 
   public static main(): void {
 
-    cliLog.info("Initializing electron application.");
+    cliLog.info("Initializing electron application. Current mode:", applicationConfig.mode);
 
     electronApplication.on("ready", Application.onApplicationReady);
     electronApplication.on("window-all-closed", Application.onApplicationWindowsClosed);
