@@ -1,5 +1,4 @@
 import { CommandRunner, EntryPoint } from "./_cli";
-
 import * as cliConfig from "./cli.json";
 
 @EntryPoint()
@@ -18,9 +17,7 @@ export class CliRunner {
     const commandRunner: CommandRunner = new CommandRunner(cmd, script, config);
 
     try {
-
       await commandRunner.run();
-
       process.exit(0);
     } catch (error) {
       process.exit(1);
