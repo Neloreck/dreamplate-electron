@@ -47,7 +47,7 @@ export class Application {
     cliLog.info("All application windows closed.");
 
     if (process.platform !== "darwin") {
-      application.quit();
+      electronApplication.quit();
     }
   }
 
