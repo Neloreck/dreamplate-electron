@@ -9,7 +9,7 @@ export const IS_PRODUCTION: boolean = (ENVIRONMENT === "production");
 export const TARGET: "electron-renderer" = "electron-renderer";
 export const PROJECT_ROOT_PATH: string = path.resolve(__dirname, "../../../");
 export const ENTRY_FILE_PATH: string = path.resolve(PROJECT_ROOT_PATH, "src/renderer/application/Application.ts");
-export const PROJECT_OUTPUT_PATH: string = path.resolve(PROJECT_ROOT_PATH, "target/dist/");
+export const PROJECT_OUTPUT_PATH: string = path.resolve(PROJECT_ROOT_PATH, "target/application/");
 export const BUILD_CONFIG_DIR_PATH: string = __dirname;
 export const TS_CONFIG_PATH: string = path.resolve(PROJECT_ROOT_PATH, "src/renderer/tsconfig.json");
 

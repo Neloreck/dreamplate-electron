@@ -34,7 +34,7 @@ export class ThemeContextManager extends ContextManager<IThemeContext> {
             light: "#dbdbdb",
             main: "#919191"
           },
-          type: "dark"
+          type: "light"
         },
         typography: {
           useNextVariants: true

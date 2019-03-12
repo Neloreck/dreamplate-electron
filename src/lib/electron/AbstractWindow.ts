@@ -8,6 +8,6 @@ export abstract class AbstractWindow {
 
   public afterClosed(fn: () => any): void {
     this.window.addListener("closed", fn);
-  };
+  }
 
 }

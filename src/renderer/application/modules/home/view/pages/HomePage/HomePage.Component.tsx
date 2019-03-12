@@ -6,7 +6,7 @@ import { Styled } from "@Lib/decorators";
 
 // View.
 import { AnimatedMount } from "@Main/view/utils";
-import { Button, Grid, WithStyles } from "@material-ui/core";
+import { Button, Card, Grid, WithStyles } from "@material-ui/core";
 import { homePageStyle } from "./HomePage.Style";
 
 // Props.
@@ -28,15 +28,13 @@ export class HomePage extends PureComponent<IHomePageProps> {
 
           <Grid
             className={classes.content}
-            justify={"space-around"}
+            justify={"center"}
             direction={"column"}
             alignItems={"stretch"}
             container
           >
 
-            Something else
-
-            <Button variant={"contained"}>Btn</Button>
+              <Button variant={"contained"}>123</Button>
 
           </Grid>
 

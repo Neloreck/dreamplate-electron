@@ -1,8 +1,9 @@
-import { app as application } from "electron";
+import { app as electronApplication } from "electron";
 
 // Lib.
-import { AbstractWindow } from "@Lib/window";
 import { EntryPoint } from "@Lib/decorators";
+import { AbstractWindow } from "@Lib/electron";
+import { cliLog } from "@Lib/utils";
 
 // View.
 import { MainWindow } from "@Application/windows/MainWindow";
@@ -13,33 +14,47 @@ export class Application {
   public static activeWindow: AbstractWindow | null = null;
 
   public static main(): void {
-    this.init();
+
+    cliLog.info("Initializing electron application.");
+
+    electronApplication.on("ready", Application.onApplicationReady);
+    electronApplication.on("window-all-closed", Application.onApplicationWindowsClosed);
+    electronApplication.on("activate", Application.onApplicationActivated);
   }
 
-  public static init(): void {
+  public static onApplicationReady(): void {
 
-    application.on("ready", () => {
-      this.activeWindow = new MainWindow();
-      this.activeWindow.init();
-      this.activeWindow.afterClosed(this.onActiveWindowDestroy);
-    });
+    cliLog.info("Application ready.");
 
-    application.on("window-all-closed", () => {
-      if (process.platform !== "darwin") {
-        application.quit()
-      }
-    });
+    Application.activeWindow = new MainWindow();
+    Application.activeWindow.init();
+    Application.activeWindow.afterClosed(Application.onActiveWindowDestroy);
+  }
 
-    application.on("activate", () => {
-      if (this.activeWindow === null) {
-        this.activeWindow = new MainWindow();
-        this.activeWindow.init();
-        this.activeWindow.afterClosed(this.onActiveWindowDestroy);
-      }
-    });
+  public static onApplicationActivated(): void {
+
+    cliLog.info("Application activated.");
+
+    if (Application.activeWindow === null) {
+      Application.activeWindow = new MainWindow();
+      Application.activeWindow.init();
+      Application.activeWindow.afterClosed(Application.onActiveWindowDestroy);
+    }
+  }
+
+  public static onApplicationWindowsClosed(): void {
+
+    cliLog.info("All application windows closed.");
+
+    if (process.platform !== "darwin") {
+      application.quit();
+    }
   }
 
   public static onActiveWindowDestroy(): void {
+
+    cliLog.info("Active window destroyed.");
+
     Application.activeWindow = null;
   }
 
