@@ -1,16 +1,21 @@
 import * as React from "react";
-import { PureComponent, ReactNode } from "react";
+import { ComponentClass, PureComponent, ReactNode } from "react";
 import { Route, Router as ReactRouter } from "react-router";
 import { Switch } from "react-router-dom";
 
 // Data.
 import { routerContextManager } from "@Main/data/store";
 
+// View.
+import { lazyLoadComponentFactory } from "@Main/view/utils";
+
 /*
  * Application submodules:
  */
 
-import { HomeRouter } from "@Module/home";
+export const HomeModule: ComponentClass = lazyLoadComponentFactory.getComponent(
+  () => import(/* webpackChunkName: "module@home" */"@Module/home")
+);
 
 /* =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- */
 
@@ -25,7 +30,7 @@ export class Router extends PureComponent {
 
         <Switch>
 
-          <Route exact={true} path={"*"} component={HomeRouter}/>
+          <Route exact={true} path={"*"} component={HomeModule}/>
 
         </Switch>
 

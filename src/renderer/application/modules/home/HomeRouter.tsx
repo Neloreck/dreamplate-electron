@@ -1,6 +1,6 @@
 import { Provide } from "dreamstate";
 import * as React from "react";
-import { PureComponent, ReactNode } from "react";
+import { ComponentClass, PureComponent, ReactNode } from "react";
 import { Route, Switch } from "react-router";
 
 // Lib.
@@ -12,9 +12,12 @@ import { authContextManager, routerContextManager, themeContextManager } from "@
 // View.
 import { GlobalThemeProvider } from "@Main/view/layouts/GlobalThemeProvider";
 import { ErrorPage } from "@Main/view/pages/ErrorPage";
+import { lazyLoadComponentFactory } from "@Main/view/utils";
 
-/* Stream routes: */
-import { HomePage } from "@Module/home/view/pages/HomePage";
+// Submodules.
+const HomePage: ComponentClass = lazyLoadComponentFactory.getComponent(
+  () => import(/* webpackChunkName: "home@home-page" */"@Module/home/view/pages/HomePage")
+);
 
 @Provide(authContextManager, routerContextManager, themeContextManager)
 @Wrapped(GlobalThemeProvider)
@@ -25,8 +28,7 @@ export class HomeRouter extends PureComponent {
     return (
       <Switch>
 
-        <Route exact={true} path={`/`} component={HomePage}/>
-        <Route exact={true} path={`/home`} component={HomePage}/>
+        <Route exact={true} path={["/", "/home"]} component={HomePage}/>
         <Route exact={true} path={"*"} component={ErrorPage}/>
 
       </Switch>

@@ -21,33 +21,25 @@ export class HomePage extends PureComponent<IHomePageProps> {
     const { classes } = this.props;
 
     return (
-      <Grid className={classes.root} wrap={"nowrap"} container>
+      <Grid className={classes.root} container>
+
+        <AppBar className={classes.appBar}>
+          Boilerplate
+        </AppBar>
 
         <Grid
           className={classes.content}
           justify={"center"}
           direction={"column"}
-          alignItems={"stretch"}
+          alignItems={"center"}
           container
         >
-
-          <AppBar className={classes.appBar}>
-            Application Bar
-          </AppBar>
-
-          <AppBar className={classes.appBar}>
-            AppBar
-          </AppBar>
 
           <Card className={classes.card}>
             Change some code there and move on. Use flex grid for aligning.
           </Card>
 
           <Grid direction={"row"} justify={"center"} container>
-
-            <Card className={classes.card}>
-              <a target={"_blank"} href={"https://electronjs.org/"}> Electron </a>
-            </Card>
 
             <Card className={classes.card}>
               <a target={"_blank"} href={"https://reactjs.org/"}> React </a>
