@@ -2,10 +2,10 @@ import { ContextManager } from "dreamstate";
 
 // Lib.
 import { Optional } from "@Lib/ts/types";
+import { Logger } from "@Lib/utils";
 
 export interface IAuthContext {
-  authActions: {
-  };
+  authActions: {};
   authState: {
     authorizing: boolean;
     authorized: boolean;
@@ -15,9 +15,8 @@ export interface IAuthContext {
 
 export class AuthContextManager extends ContextManager<IAuthContext> {
 
-  public context: IAuthContext = {
-    authActions: {
-    },
+  protected context: IAuthContext = {
+    authActions: {},
     authState: {
       authorized: false,
       authorizing: false,
@@ -25,8 +24,10 @@ export class AuthContextManager extends ContextManager<IAuthContext> {
     }
   };
 
+  private readonly log: Logger = new Logger("[🗺AUTH]", true);
+
   protected onProvisionStarted(): void {
-    // Some kind of state initialization can be there.
+    this.log.info("Auth context provision started.");
   }
 
 }

@@ -1,5 +1,7 @@
 import { Bind, ContextManager } from "dreamstate";
 import { createMemoryHistory, History } from "history";
+import { createElement, ReactNode } from "react";
+import { Router as ReactRouter } from "react-router";
 
 // Lib.
 import { Logger } from "@Lib/utils";
@@ -18,7 +20,7 @@ export interface IRouterContext {
 
 export class RouterContextManager extends ContextManager<IRouterContext> {
 
-  public context: IRouterContext = {
+  protected context: IRouterContext = {
     routingActions: {
       getCurrentLocation: this.getCurrentLocation,
       goBack: this.goBack,
@@ -30,13 +32,14 @@ export class RouterContextManager extends ContextManager<IRouterContext> {
     }
   };
 
-  private log: Logger = new Logger("[🗺️ROUTER]", true);
+  private readonly log: Logger = new Logger("[🗺️ROUTER]", true);
 
-  constructor() {
-    super();
-
-    // @ts-ignore
-    window.d = this;
+  public getProvider<D extends { children: ReactNode }>(): any {
+    // Create router wrapper with provider for app-level.
+    return (props: D): ReactNode =>
+      createElement(ReactRouter, { history: this.context.routingState.history },
+        createElement(super.getProvider(), props, props.children)
+      );
   }
 
   @Bind()
@@ -44,7 +47,6 @@ export class RouterContextManager extends ContextManager<IRouterContext> {
 
     this.log.info(`Replace path: ${path}.`);
     this.context.routingState.history.replace(path);
-    this.update();
   }
 
   @Bind()
@@ -52,20 +54,22 @@ export class RouterContextManager extends ContextManager<IRouterContext> {
 
     this.log.info(`Push path: ${path}.`);
     this.context.routingState.history.push(path);
-    this.update();
   }
 
   @Bind()
   public goBack(): void {
 
-    this.log.info(`Go back.`);
+    this.log.info("Go back.");
     this.context.routingState.history.goBack();
-    this.update();
   }
 
   @Bind()
   public getCurrentLocation(): string {
     return this.context.routingState.history.location.pathname;
+  }
+
+  protected onProvisionStarted(): void {
+    this.log.info("Routing context provision started.");
   }
 
 }

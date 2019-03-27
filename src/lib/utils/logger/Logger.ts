@@ -5,6 +5,8 @@ export class Logger {
   private static readonly IS_DEV: boolean = process.env.NODE_ENV === "development";
 
   private readonly prefix: string;
+
+  private readonly prefixColor: string = "#002512";
   private readonly enabled: boolean = true;
 
   public constructor(prefix: string, enabled?: boolean) {
@@ -22,23 +24,23 @@ export class Logger {
 
   public debug(...args: Array<any>): void {
     if (Logger.IS_DEV && this.enabled) {
-      console.debug(`%c${this.prefix}`, "color: #bada53", "[D]", ...args);
+      console.debug(`%c${this.prefix}`, this.prefixColor, "[D]", ...args);
     }
   }
 
   public warn(...args: Array<any>): void {
     if (Logger.IS_DEV && this.enabled) {
-      console.warn(`%c${this.prefix}`, "color: #bada53", ...args);
+      console.warn(`%c${this.prefix}`, this.prefixColor, ...args);
     }
   }
 
   public error(...args: Array<any>): void {
-    console.error(`%c${this.prefix}`, "color: #bada53", ...args);
+    console.error(`%c${this.prefix}`, this.prefixColor, ...args);
   }
 
   public info(...args: Array<any>): void {
     if (Logger.IS_DEV && this.enabled) {
-      console.info(`%c${this.prefix}`, "color: #bada53", ...args);
+      console.info(`%c${this.prefix}`, this.prefixColor, ...args);
     }
   }
 
