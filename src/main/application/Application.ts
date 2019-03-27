@@ -30,8 +30,7 @@ export class Application {
     cliLog.info("Application ready.");
 
     Application.activeWindow = new MainWindow();
-    Application.activeWindow.init();
-    Application.activeWindow.afterClosed(Application.onActiveWindowDestroy);
+    Application.activeWindow.listenAfterClosed(Application.onActiveWindowDestroy);
   }
 
   public static onApplicationActivated(): void {
@@ -40,8 +39,7 @@ export class Application {
 
     if (Application.activeWindow === null) {
       Application.activeWindow = new MainWindow();
-      Application.activeWindow.init();
-      Application.activeWindow.afterClosed(Application.onActiveWindowDestroy);
+      Application.activeWindow.listenAfterClosed(Application.onActiveWindowDestroy);
     }
   }
 

@@ -9,19 +9,22 @@ import { applicationConfig } from "@Application/configs/ApplicationConfig";
 export class MainWindow extends AbstractWindow {
 
   protected window: BrowserWindow = new BrowserWindow({
-    height: 600,
-    minHeight: 220,
-    minWidth: 400,
+    height: 360,
+    minHeight: 360,
+    minWidth: 640,
     webPreferences: {
       nodeIntegration: true
     },
-    width: 800
+    width: 640
   });
 
-  public init(): void {
+  public constructor() {
+
+    super();
 
     this.window.on("closed", () => delete this.window);
 
+    // todo: Proper resources handling.
     this.window.loadFile("target/application/index.html");
 
     if (applicationConfig.isDev) {
