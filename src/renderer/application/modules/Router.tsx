@@ -12,13 +12,13 @@ import { authContextManager, routerContextManager, themeContextManager } from "@
 
 // View.
 import { GlobalThemeProvider } from "@Main/view/layouts/GlobalThemeProvider";
-import { lazyLoadComponentFactory } from "@Main/view/utils";
+import { LazyLoadComponentFactory } from "@Main/view/utils";
 
 /*
  * Application submodules:
  */
 
-export const HomeModule: ComponentClass = lazyLoadComponentFactory.getComponent(
+export const HomeModule: ComponentClass = LazyLoadComponentFactory.getComponent(
   () => import(/* webpackChunkName: "module@home" */"@Module/home")
 );
 

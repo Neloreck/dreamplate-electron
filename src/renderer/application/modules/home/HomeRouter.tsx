@@ -7,10 +7,10 @@ import { log } from "@Lib/utils/logger";
 
 // View.
 import { ErrorPage } from "@Main/view/pages/ErrorPage";
-import { lazyLoadComponentFactory } from "@Main/view/utils";
+import { LazyLoadComponentFactory } from "@Main/view/utils";
 
 // Submodules.
-const HomePage: ComponentClass = lazyLoadComponentFactory.getComponent(
+const HomePage: ComponentClass = LazyLoadComponentFactory.getComponent(
   () => import(/* webpackChunkName: "home@home-page" */"@Module/home/view/pages/HomePage")
 );
 
