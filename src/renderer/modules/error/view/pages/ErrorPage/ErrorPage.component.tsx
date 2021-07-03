@@ -1,0 +1,47 @@
+import { useManager } from "dreamstate";
+import { ReactElement, useCallback } from "react";
+import { createUseStyles } from "react-jss";
+
+import { RouterManager } from "@/core/data/store";
+import { MainHeader } from "@/core/view/components/MainHeader";
+import { IApplicationTheme } from "@/lib/theme";
+
+export const useStyles = createUseStyles(({ palette }: IApplicationTheme) => ({
+  content: {
+    alignItems: "center",
+    alignSelf: "normal",
+    backgroundColor: palette.background.default,
+    backgroundSize: "cover",
+    display: "flex",
+    flexDirection: "column",
+    flexGrow: 1,
+    flexWrap: "nowrap",
+    justifyContent: "center",
+    overflowY: "auto",
+    transitionDuration: "500ms"
+  },
+  labelCard: {
+    backgroundColor: palette.secondary.light
+  }
+}));
+
+export function ErrorPage({
+  classes: { content, labelCard } = useStyles(),
+  routerContext: { routingActions: { hardPush } } = useManager(RouterManager)
+}): ReactElement {
+  const onHomeNavigated = useCallback(() => hardPush("/home"), []);
+
+  return (
+    <>
+      <MainHeader/>
+
+      <main className={content}>
+        <div className={labelCard}>
+          { IS_DEV ? "Page was not found or current path is not serving by dev server." : "Page was not found." }
+        </div>
+
+        <button onClick={onHomeNavigated}> Go Home </button>
+      </main>
+    </>
+  );
+}

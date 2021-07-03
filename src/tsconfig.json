@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "emitDecoratorMetadata": false,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "node",
+    "jsx": "preserve",
+    "lib": [
+      "es2015",
+      "es2016",
+      "es2017",
+      "es2018",
+      "dom"
+    ],
+    "baseUrl": "./",
+    "outDir": "../target/dist:ts",
+    "paths": {
+      "#/*": [ "../cli/build/*" ],
+      "@/*": [ "./renderer/*" ],
+      "~/*": [ "./main/*" ],
+    },
+    "resolveJsonModule": true
+  },
+  "types": [
+    "node"
+  ],
+  "include": [
+    ".",
+    "../cli"
+  ]
+}

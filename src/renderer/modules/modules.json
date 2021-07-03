@@ -1,0 +1,19 @@
+{
+  "modules": [
+    {
+      "entry": "./about",
+      "name": "about",
+      "title": "About"
+    },
+    {
+      "entry": "./main",
+      "name": "main",
+      "title": "Dreamplate"
+    },
+    {
+      "entry": "./error",
+      "name": "error",
+      "title": "Error"
+    }
+  ]
+}

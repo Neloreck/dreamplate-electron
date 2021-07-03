@@ -1,35 +1,102 @@
-# x-core electron desktop application boilerplate
+# Dreamplate electron client application starter
+
+todo;
 
 ### Install:
 
-  - `npm install`
-  
-## Development (parallel):
+- `npm install`
+- `npm run setup` <br/>
+    or
+- `npm install -g lerna typescript` [optionally]
+- `./run setup`
 
-  - `npm run watch:main`
-  - `npm run watch:renderer`
-  - `npm run start:dev`
-  
+### NPM Scripts
+
+- `npm run setup` [project packages sync, install all package.json sub-projects dependencies]
+
+- `npm run help` [get cli commands list and description]
+
+### CLI Scripts
+
+- `./run build` [build project in production mode]
+
+- `./run build:dev` [build project in development mode]
+
+- `./run start` [start project in production mode]
+
+- `./run start:dev` [build project in production mode]
+
+- `./run test` [run unit tests, linter and type checker]
+
+- `./run COMMAND_NAME` [run specific cli script]
+
 ### What is used:
+    
+- Custom CLI
+- Webpack, lazy loading, tree shaking, chunks + modular architecture, aliases
+- React, dreamstate as store manager
+- JSS, theming with own context management
+- Typescript (proposal decorators, OOP style, newest features, babel loader)
+- Jest for unit testing (enzyme-react tests + simple tests)
+- React fast refresh for HMR
+- HBS (template, global styles)
 
-  - Custom CLI
-  - Electron
-  - React (MaterialUI, dreamstate as contextStore)
-  - Typescript (decorators, OOP style, newest features, awt loader with babel)
-  - Webpack, lazy loading, tree shaking, chunks + modular architecture, aliases
-  - Jest
-  - SCSS (globals), JSS (components), customized theme
+### Architecture and general approach:
 
-  
-### Commands:
+Current architecture is intended to separate logical modules/scopes with reducing of memory/cpu/network usage.
 
-  - `npm run start` - start electron in prod mode
-  - `npm run start:dev` - start electron in dev mode
-  - `npm run build` - build renderer and main process (prod mode)
-  - `npm run build:dev` - build renderer and main process (dev mode)
-  - `npm run build:renderer` - build renderer (prod mode)
-  - `npm run build:renderer:dev` - build renderer (dev mode)
-  - `npm run build:main` - build main process code (prod mode)
-  - `npm run build:main:dev` - build main process code (dev mode)
-  - `npm run test` - test project, lint ts files
-  - `npm run cli ${SCRIPT_NAME_THERE}` - run cli script, use cli.json for scripts adding
+File 'src/application/modules/modules.json' is used for separating modules and declaration of application routes.
+
+Such approach allows to:
+  - Reduce initial load without importing lazy components right after first JS evaluation
+  - Reduce bundle size with improved npm modules caching related to specific routes
+  - Reduce general codebase complexity with better modular system
+  - Clean up used memory amount since every module will trigger soft page reload
+
+* Shared reusable logic takes place: src/lib 
+* Shared reusable api logic: src/api 
+* Shared application level code: src/application/main
+* Specific module code: src/application/modules/{MODULE_NAME}
+
+### General project tree
+
+- **cli** [project commands and everything runnable]
+
+- _build_ [webpack build configuration and scripts]
+   - config [configuration]
+   - loaders [webpack loaders for files processing]
+   - public [public files that will be copied to target dist]
+   - template [project template specific scripts and configs]
+
+- _test_ [jest testing configuration and runner]
+   - config [configuration]
+
+- **src** [project source code]
+
+- _api_ [project client api mule, everything related to data exchange]
+  - GENERIC_DESTINATION (*)
+
+- _application_[application specific code]
+  - initialization [inline pre-executed code with first priority]
+  - main [application specific code shared between all modules]
+  - modules [folder with application modules]
+    - GENERIC MODULE (*)
+
+- _lib_ - [shared utils and code samples that can be reused later]
+  - GENERIC_LIB (*)
+
+---
+    
++ **GENERIC_DESTINATION** [specific api destination or route that includes api exchange and models declaration]
++ **GENERIC_MODULE** [specific application module that implements application route -> feature]
++ **GENERIC_LIB** [specific library module that includes sharable code between applications]
+
+--- 
+
+Typically module is separated as VIEW and DATA sub-modules. Each one includes only view or data logic and tries to keep this pattern.
+
+## Futures
+- Translations experiments
+
+## Side packages (waiting for)
+- Hooks implementation for react-router (less VDOM tree pollution)

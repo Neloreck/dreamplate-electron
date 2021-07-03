@@ -1,13 +1,19 @@
 {
-  "extends": "../src/main/tsconfig.json",
+  "extends": "../src/tsconfig.json",
   "compilerOptions": {
-    "resolveJsonModule": true,
-    "target": "esnext",
-    "experimentalDecorators": true,
-    "sourceMap": false,
-    "module": "commonjs",
+    "target": "es5",
+    "esModuleInterop": true,
     "suppressImplicitAnyIndexErrors": true,
-    "lib": ["es5", "es6",  "es7",  "es2018", "dom"],
+    "resolveJsonModule": true,
+    "module": "commonjs",
+    "lib": [
+      "es5",
+      "es6",
+      "es7",
+      "es2018",
+      "dom"
+    ],
+    "incremental": true,
     "baseUrl": "./"
   }
 }
