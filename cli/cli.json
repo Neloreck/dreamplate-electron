@@ -40,17 +40,11 @@
       "private": true,
       "description": "Build project renderer and related source files. Following arguments can include module names."
     },
-    "watch-main-webpack": {
-      "exec": "ts-node --project ./cli/tsconfig.json ./cli/build/WatchMainRunner.ts",
-      "private": true,
-      "description": "Start main watch."
-    },
-    "build-main-webpack": {
-      "exec": "./run clean-main && ts-node --project ./cli/tsconfig.json ./cli/build/BuildMainRunner.ts",
+    "serve-renderer-webpack": {
+      "exec": "./run clean-renderer && ts-node --project ./cli/tsconfig.json ./cli/build/DevServerRenderRunner.ts",
       "private": true,
       "description": "Build project renderer and related source files. Following arguments can include module names."
     },
-    "============================================================================================================": "==",
     "watch-renderer": {
       "exec":"npx cross-env NODE_ENV=production ./run watch-renderer-webpack",
       "description": "Build project renderer bundles in production mode."
@@ -67,7 +61,21 @@
       "exec":"npx cross-env NODE_ENV=development ANALYZE=true ./run build-renderer-webpack",
       "description": "Build project renderer bundles in dev mode."
     },
-    "==========================================================================================================": "===",
+    "serve-renderer:dev": {
+      "exec":"npx cross-env NODE_ENV=development SERVER=true ./run serve-renderer-webpack",
+      "description": "Serve project renderer bundles in dev mode with webpack server."
+    },
+    "============================================================================================================": "=",
+    "watch-main-webpack": {
+      "exec": "ts-node --project ./cli/tsconfig.json ./cli/build/WatchMainRunner.ts",
+      "private": true,
+      "description": "Start main watch."
+    },
+    "build-main-webpack": {
+      "exec": "./run clean-main && ts-node --project ./cli/tsconfig.json ./cli/build/BuildMainRunner.ts",
+      "private": true,
+      "description": "Build project renderer and related source files. Following arguments can include module names."
+    },
     "watch-main": {
       "exec":"npx cross-env NODE_ENV=production ./run watch-main-webpack",
       "description": "Build project main script in production mode."
@@ -84,7 +92,7 @@
       "exec":"npx cross-env NODE_ENV=development ./run build-main-webpack",
       "description": "Build project main entry in dev mode."
     },
-    "=========================================================================================================": "====",
+    "===========================================================================================================": "==",
     "electron": {
       "exec": "npx cross-env NODE_ENV=production electron ./target/dist/main/index.js",
       "description": "Start electron app in production mode"
@@ -93,7 +101,16 @@
       "exec": "npx cross-env NODE_ENV=production electron ./target/dist/main/index.js",
       "description": "Start electron app in dev mode"
     },
-    "========================================================================================================": "=====",
+    "==========================================================================================================": "===",
+    "package": {
+      "exec": [
+        "./run build-main",
+        "./run build-renderer",
+        "echo 'todo;'"
+      ],
+      "description": "todo;"
+    },
+    "=========================================================================================================": "====",
     "verify": {
       "exec": [
         "./run typecheck",

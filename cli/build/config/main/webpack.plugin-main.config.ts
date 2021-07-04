@@ -5,7 +5,6 @@ import { DefinePlugin, Configuration, SourceMapDevToolPlugin } from "webpack";
 import {
   DOTENV_CONFIG_PATH,
   IS_PRODUCTION,
-  PROJECT_INLINE_MODULES,
   PROJECT_ROOT_PATH,
   RUNTIME_CONSTANTS,
   TS_CONFIG_PATH,
@@ -68,9 +67,6 @@ export const PLUGIN_CONFIG: {
       new SourceMapDevToolPlugin({
         filename: "source_maps/[base].map[query]",
         publicPath: BACKEND_PUBLIC_PATH,
-        exclude: [
-          ...PROJECT_INLINE_MODULES
-        ],
         fileContext: "public"
       })
     ])

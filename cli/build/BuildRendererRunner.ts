@@ -16,7 +16,7 @@ export class BuildRunner {
       process.env.ENTRIES = JSON.stringify(args.slice(2));
     }
 
-    const { PROJECT_OUTPUT_PATH, PROJECT_ROOT_PATH, WEBPACK_RENDERER_CONFIG } = require("./config");
+    const { PROJECT_OUTPUT_PATH, PROJECT_ROOT_PATH, WEBPACK_RENDERER_CONFIG } = require("./config/renderer");
     const compiler: Compiler = Webpack(WEBPACK_RENDERER_CONFIG);
 
     process.stdout.write(

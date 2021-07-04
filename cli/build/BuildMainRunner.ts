@@ -16,7 +16,7 @@ export class BuildMainRunner {
       process.env.ENTRIES = JSON.stringify(args.slice(2));
     }
 
-    const { PROJECT_OUTPUT_PATH, PROJECT_ROOT_PATH, WEBPACK_MAIN_CONFIG } = require("./config");
+    const { PROJECT_OUTPUT_PATH, PROJECT_ROOT_PATH, WEBPACK_MAIN_CONFIG } = require("./config/main");
     const compiler: Compiler = Webpack(WEBPACK_MAIN_CONFIG);
 
     process.stdout.write(

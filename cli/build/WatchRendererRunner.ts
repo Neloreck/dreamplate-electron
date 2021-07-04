@@ -18,7 +18,7 @@ export class WatchRendererRunner {
 
     const {
       WEBPACK_RENDERER_CONFIG, PROJECT_ROOT_PATH, PROJECT_RENDERER_DIST_PATH
-    } = require("./config");
+    } = require("./config/renderer");
     const compiler: Compiler = Webpack(WEBPACK_RENDERER_CONFIG);
 
     compiler.watch({}, (error: any, stats: any): void => {

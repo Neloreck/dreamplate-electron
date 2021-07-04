@@ -1,7 +1,7 @@
 import { BrowserWindow } from "electron";
 
 import { log } from "#/macroses/log.macro";
-import { getSourcePathForModule } from "~/utils/electron";
+import { loadWindowResourceForModule } from "~/utils/electron";
 import { AbstractWindow } from "~/windows/AbstractWindow";
 
 export class MainWindow extends AbstractWindow {
@@ -21,7 +21,7 @@ export class MainWindow extends AbstractWindow {
 
   protected async load(): Promise<void> {
     try {
-      await this.window.loadFile(getSourcePathForModule("main"));
+      await loadWindowResourceForModule(this.window, "main");
     } catch (error) {
       log.error("Failed to load source for main window:", error);
     }

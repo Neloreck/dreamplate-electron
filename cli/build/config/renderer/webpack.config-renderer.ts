@@ -1,11 +1,12 @@
 import { Configuration } from "webpack";
 
-import { ENVIRONMENT, IS_PRODUCTION } from "../webpack.constants";
-import { DEV_CONFIG } from "../webpack.dev.config";
+import { ENVIRONMENT, IS_PRODUCTION, DEV_SERVER_ENABLED } from "../webpack.constants";
 import { MODULE_CONFIG } from "../webpack.module.config";
 import { PERFORMANCE_CONFIG } from "../webpack.performance.config";
 import { RESOLVE_CONFIG } from "../webpack.resolve.config";
+import { STATS_CONFIG } from "../webpack.stats.config";
 
+import { DEV_SERVER_CONFIG } from "./webpack.devServer.config";
 import { IO_CONFIG } from "./webpack.io-renderer.config";
 import { PLUGIN_CONFIG } from "./webpack.plugin-renderer.config";
 
@@ -21,17 +22,18 @@ if (!ENVIRONMENT) {
  * Bundled from multiple computed scripts.
  */
 export const WEBPACK_RENDERER_CONFIG: Configuration = {
-  devtool: DEV_CONFIG.DEV_TOOL,
+  devtool: false,
   entry: IO_CONFIG.ENTRY,
+  devServer: DEV_SERVER_CONFIG,
   mode: IS_PRODUCTION ? "production" : "development",
   module: MODULE_CONFIG,
   optimization: PLUGIN_CONFIG.OPTIMIZATION,
   output: IO_CONFIG.OUTPUT,
   plugins: PLUGIN_CONFIG.PLUGINS,
   resolve: RESOLVE_CONFIG,
-  stats: DEV_CONFIG.STATS,
+  stats: STATS_CONFIG,
   performance: PERFORMANCE_CONFIG,
-  target: "electron-renderer"
+  target: DEV_SERVER_ENABLED ? "web" : "electron-renderer"
 } as Configuration;
 
 export default WEBPACK_RENDERER_CONFIG;

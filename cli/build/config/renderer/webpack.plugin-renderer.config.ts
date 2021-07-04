@@ -13,7 +13,6 @@ import {
   IS_PRODUCTION,
   MODULES_CONFIG,
   PROJECT_CORE_DEPENDENCIES,
-  PROJECT_INLINE_MODULES,
   PROJECT_ROOT_PATH,
   ANALYZE_ENABLED,
   REPORT_BUNDLE_ANALYZER_PATH,
@@ -24,17 +23,17 @@ import {
   RENDERER_MODULES_ROOT_PATH,
   BACKEND_PUBLIC_PATH,
   ESLINT_CONFIG_PATH,
-  ESLINT_IGNORE_PATH
+  ESLINT_IGNORE_PATH, DEV_SERVER_REFRESH
 } from "../webpack.constants";
 import { IModuleDefinition } from "../webpack.types";
 
 // CJS way to import most plugins.
+const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const DotEnv = require("dotenv-webpack");
 const DuplicatePackageCheckerPlugin = require("duplicate-package-checker-webpack-plugin");
 const ForkTsCheckerWebpackPlugin = require("fork-ts-checker-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const ScriptExtHtmlPlugin = require("script-ext-html-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer").BundleAnalyzerPlugin;
 const StatsWriterPlugin = require("webpack-stats-plugin").StatsWriterPlugin;
@@ -182,16 +181,12 @@ export const PLUGIN_CONFIG: {
         enabled: true,
         configFile: TS_CONFIG_PATH
       }
-    }),
-    new ScriptExtHtmlPlugin({ inline: PROJECT_INLINE_MODULES })
+    })
   ]
     .concat(IS_PRODUCTION ? [] : [
       new SourceMapDevToolPlugin({
         filename: "source_maps/[base].map[query]",
         publicPath: BACKEND_PUBLIC_PATH,
-        exclude: [
-          ...PROJECT_INLINE_MODULES
-        ],
         fileContext: "public"
       })
     ])
@@ -221,4 +216,12 @@ export const PLUGIN_CONFIG: {
         }
       })
     ]: [])
+    .concat(DEV_SERVER_REFRESH ? [
+      new ReactRefreshWebpackPlugin({
+        exclude: [
+          /\/application\/initialization/,
+          /node_modules/
+        ]
+      })
+    ] :[])
 };

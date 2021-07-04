@@ -41,7 +41,18 @@ export const BASE_PROJECT_STATIC_FILES: Array<string> = [
   path.resolve(BUILD_CONFIGURATION_PATH, "public/manifest.json")
 ];
 
-export const BACKEND_PUBLIC_PATH: string = "./";
+/**
+ * Dev server configuration.
+ */
+
+export const DEV_SERVER_ENABLED: boolean = process.env.SERVER === "true";
+export const DEV_SERVER_PROTOCOL: string = "http";
+export const DEV_SERVER_HOST: string = "0.0.0.0";
+export const DEV_SERVER_PORT: number = 3000;
+export const DEV_SERVER_CONTENT_BASE: string = PROJECT_RENDERER_DIST_PATH;
+export const DEV_SERVER_REFRESH: boolean = DEV_SERVER_ENABLED;
+
+export const BACKEND_PUBLIC_PATH: string = DEV_SERVER_ENABLED ? "/" : ".";
 
 /**
  * Report configuration.
@@ -69,11 +80,6 @@ export const PROJECT_CORE_DEPENDENCIES: Array<string> = [
   "loose-envify",
   "object-assign",
   "scheduler"
-];
-
-export const PROJECT_INLINE_MODULES: Array<string | RegExp> = [
-  /.*\/initialization.*/, // Critical application code for inlining.
-  /.*\/runtime.*$/ // Webpack runtime support.
 ];
 
 export const MAX_CORE_CHUNK_SIZE: number = IS_PRODUCTION ? 500 * 1000 : 3000 * 1000;

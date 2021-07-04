@@ -18,7 +18,7 @@ export class WatchMainRunner {
 
     const {
       WEBPACK_MAIN_CONFIG, PROJECT_ROOT_PATH, PROJECT_MAIN_DIST_PATH
-    } = require("./config");
+    } = require("./config/main");
     const compiler: Compiler = Webpack(WEBPACK_MAIN_CONFIG);
 
     compiler.watch({}, (error: any, stats: any): void => {
