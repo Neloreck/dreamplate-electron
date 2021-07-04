@@ -82,8 +82,6 @@ export const PROJECT_CORE_DEPENDENCIES: Array<string> = [
   "scheduler"
 ];
 
-export const MAX_CORE_CHUNK_SIZE: number = IS_PRODUCTION ? 500 * 1000 : 3000 * 1000;
-
 /**
  * Project modules config.
  */

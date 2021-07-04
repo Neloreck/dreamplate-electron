@@ -19,7 +19,6 @@ import {
   REPORT_BUNDLE_STATS_PATH,
   RUNTIME_CONSTANTS,
   TS_CONFIG_PATH,
-  MAX_CORE_CHUNK_SIZE,
   RENDERER_MODULES_ROOT_PATH,
   BACKEND_PUBLIC_PATH,
   ESLINT_CONFIG_PATH,
@@ -124,7 +123,6 @@ export const PLUGIN_CONFIG: {
     splitChunks: {
       cacheGroups: {
         "core": {
-          maxSize: MAX_CORE_CHUNK_SIZE,
           priority: 100,
           reuseExistingChunk: false,
           test: new RegExp(
@@ -136,14 +134,12 @@ export const PLUGIN_CONFIG: {
         },
         "vendor": {
           priority: 70,
-          maxSize: MAX_CORE_CHUNK_SIZE,
           reuseExistingChunk: false,
           test: /\/src\/node_modules\//
         },
         ...createChunkCacheGroups(MODULES_CONFIG.modules),
         "shared": {
           priority: 10,
-          maxSize: MAX_CORE_CHUNK_SIZE,
           reuseExistingChunk: true,
           test: /node_modules/
         }
