@@ -1,40 +1,39 @@
 # Dreamplate electron client application starter
 
-todo;
-
 ### Install:
 - `npm install`
-- `./run setup` <br/>
-  or
-- `npm install -g lerna typescript`
+- `./run setup`
+####  or
+- `npm install -g pnpm typescript`
 - `./run setup`
 
 ### Start working:
-- `./run build-renderer:dev`
-- `./run build-main:dev`
-- `./run electon:dev`
+- `./run watch-assets:dev --server` - to start serving renderer, process and preload scripts with dev server 
+- `./run electon` - to start electron application
+### or
+- `./run watch-assets:dev` - to start watching renderer, process and preload scripts
+- `./run electon` - to start electron application
 
-### Build app:
-- `./run build`
+### Build assets:
+- `./run build-assets`
 - `Open target/dist folder and check output`
+
+### Package app
+- todo
 
 ### CLI Scripts
 - `./run help` [print avaliable commands with description]
-- `./run build` [build project in production mode]
-- `./run build:dev` [build project in development mode]
-- `./run start` [start project in production mode]
-- `./run start:dev` [build project in production mode]
-- `./run test` [run unit tests, linter and type checker]
+- `./run verify` [run unit tests, linter and type checker]
 - `./run COMMAND_NAME` [run specific cli script]
 
 ### What is used:
 - Custom CLI
 - Webpack (babel loader)
 - React
-- dreamstate (store manager)
-- JSS, theming with basoc functionality
+- Dreamstate (store manager)
+- JSS, theming with basic functionality
 - Typescript
-- Jest for unit testing (enzyme-react tests + simple tests)
+- Jest for unit testing
 - React fast refresh for HMR
 - HBS (template, global styles)
 
@@ -67,33 +66,28 @@ Such approach allows to:
 
 - _test_ [jest testing configuration and runner]
   - config [configuration]
-
+<br/>
+<br/>
 - **src** [project source code]
 
-- _api_ [project client api mule, everything related to data exchange]
-  - GENERIC_DESTINATION (*)
-
-- _application_[application specific code]
+- _renderer_[application specific code]
   - initialization [inline pre-executed code with first priority]
   - main [application specific code shared between all modules]
   - modules [folder with application modules]
     - GENERIC MODULE (*)
 
+- _process_[electron process specific code]
+
+- _bridge_[preload script specific code]
+
 - _lib_ - [shared utils and code samples that can be reused later]
   - GENERIC_LIB (*)
+
+- _api_ [project client api mule, everything related to data exchange]
+  - GENERIC_DESTINATION (*)
 
 ---
 
 + **GENERIC_DESTINATION** [specific api destination or route that includes api exchange and models declaration]
 + **GENERIC_MODULE** [specific application module that implements application route -> feature]
 + **GENERIC_LIB** [specific library module that includes sharable code between applications]
-
---- 
-
-Typically module is separated as VIEW and DATA sub-modules. Each one includes only view or data logic and tries to keep this pattern.
-
-## Future
-- Translations experiments
-
-## Side packages (waiting for)
-- Hooks implementation for react-router (less VDOM tree pollution)

@@ -1,1 +1,1 @@
-export * from "@/core/data/configs/ApplicationConfig";
+export * from "./ApplicationConfig";

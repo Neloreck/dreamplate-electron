@@ -1,17 +1,12 @@
 import { ReactElement } from "react";
-import { Route, Switch } from "react-router";
+import { Route, Routes } from "react-router-dom";
 
-import { DefaultErrorFallback } from "@/core/view/layouts";
-import { ErrorPage } from "@/modules/error/view/pages/ErrorPage";
+import { ErrorPage } from "@/renderer/modules/error/view/pages";
 
 export function ErrorRouter(): ReactElement {
   return (
-    <Switch>
-
-      <Route path={"/error"} component={ErrorPage} exact={true}/>
-
-      <Route render={() => <DefaultErrorFallback reload={false}/>}/>
-
-    </Switch>
+    <Routes>
+      <Route path={"*"} element={<ErrorPage />} />
+    </Routes>
   );
 }

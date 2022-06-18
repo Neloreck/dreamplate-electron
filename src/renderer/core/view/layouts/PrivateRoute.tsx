@@ -1,8 +1,13 @@
 import { useManager } from "dreamstate";
 import { ReactElement, useEffect, useLayoutEffect } from "react";
-import { Route, RouteProps } from "react-router";
+import { Route, RouteProps } from "react-router-dom";
 
-import { AuthManager, IAuthContext, IRouterContext, RouterManager } from "@/core/data/store";
+import {
+  AuthManager,
+  IAuthContext,
+  IRouterContext,
+  RouterManager
+} from "@/renderer/core/data/store";
 
 export interface IPrivateRouteProps extends RouteProps {
   authContext: IAuthContext;
@@ -22,15 +27,15 @@ export function PrivateRoute({
   reversed = false,
   redirect = true,
   authContext: { user } = useManager(AuthManager),
-  routerContext: { routingActions: { replace }, path } = useManager(RouterManager),
+  routerContext: { history, path } = useManager(RouterManager),
   ...routeProps
 }: IPrivateRouteProps): ReactElement {
   useLayoutEffect(() => {
     if (!user.isLoading && (reversed ? user.value : !user.value)) {
       if (redirect === true) {
-        replace(DEFAULT_REDIRECT + "?next=" + path);
+        history.replace(DEFAULT_REDIRECT + "?next=" + path);
       } else {
-        replace((redirect as string).replace(/%currentPath%/, path));
+        history.replace((redirect as string).replace(/%currentPath%/, path));
       }
     }
   }, []);
@@ -40,13 +45,15 @@ export function PrivateRoute({
       // todo: Own NEXT implementation for redirect.
       const next: string = "/"; // getQueryParams().next;
 
-      replace(
+      history.replace(
         typeof next === "string"
-          ? next as string
-          : typeof redirect === "string" ? redirect as string : "/todo"
+          ? (next as string)
+          : typeof redirect === "string"
+            ? (redirect as string)
+            : "/todo"
       );
     }
   });
 
-  return <Route {...routeProps}/>;
+  return <Route {...routeProps} />;
 }

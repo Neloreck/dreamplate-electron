@@ -4,67 +4,91 @@
   "private": true,
   "repository": "https://github.com/neloreck/dreamplate",
   "description": "Dreamplate boilerplate.",
-  "author": "Igor Syrotenko",
+  "author": {
+    "name": "Igor Syrotenko",
+    "email": "neloreck@gmail.com>"
+  },
   "license": "ISC",
   "scripts": {},
   "dependencies": {
-    "@babel/runtime": "^7.14.6",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "electron": "^19.0.4",
+    "react": "^18.1.0",
+    "react-dom": "^18.1.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.14.5",
-    "@babel/core": "^7.14.6",
-    "@babel/plugin-proposal-class-properties": "^7.14.5",
-    "@babel/plugin-proposal-decorators": "^7.14.5",
-    "@babel/plugin-transform-react-constant-elements": "^7.14.5",
-    "@babel/plugin-transform-runtime": "^7.14.5",
-    "@babel/preset-env": "^7.14.7",
-    "@babel/preset-react": "^7.14.5",
-    "@babel/preset-typescript": "^7.14.5",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.4.3",
-    "@types/enzyme": "^3.10.8",
     "@types/jest": "^26.0.23",
     "@types/node": "^14.14.7",
-    "@types/react": "^17.0.13",
-    "@types/react-dom": "^17.0.8",
-    "@types/webpack": "^5.28.0",
-    "@types/webpack-dev-server": "^3.11.4",
-    "@typescript-eslint/eslint-plugin": "^4.28.1",
-    "@typescript-eslint/parser": "^4.28.1",
-    "@wojtekmaj/enzyme-adapter-react-17": "^0.6.2",
-    "babel-jest": "^27.0.6",
-    "babel-loader": "^8.2.2",
-    "babel-plugin-macros": "^3.1.0",
-    "babel-plugin-module-resolver": "^4.1.0",
-    "colors": "^1.4.0",
-    "copy-webpack-plugin": "^9.0.1",
+    "@types/react": "^18.0.12",
+    "@types/react-dom": "^18.0.5",
     "cross-env": "^7.0.3",
-    "dotenv-webpack": "^7.0.3",
-    "duplicate-package-checker-webpack-plugin": "^3.0.0",
-    "electron": "^13.1.5",
-    "enzyme": "^3.11.0",
-    "enzyme-to-json": "^3.6.2",
-    "eslint": "^7.30.0",
-    "eslint-plugin-import": "^2.23.4",
-    "eslint-plugin-jest": "^24.3.6",
-    "eslint-plugin-react": "^7.24.0",
-    "eslint-plugin-simple-import-sort": "^7.0.0",
-    "fork-ts-checker-webpack-plugin": "^6.2.12",
-    "handlebars-loader": "^1.7.1",
-    "html-webpack-plugin": "^5.3.2",
-    "jest": "^27.0.6",
-    "lerna": "^4.0.0",
-    "react-refresh": "^0.10.0",
-    "terser-webpack-plugin": "^5.1.1",
-    "ts-node": "^10.0.0",
-    "type-fest": "^0.13.1",
-    "typescript": "^4.3.5",
-    "url-loader": "^4.1.1",
-    "webpack": "^5.42.0",
-    "webpack-bundle-analyzer": "^4.4.2",
-    "webpack-cli": "^4.7.2",
-    "webpack-dev-server": "^3.11.2",
-    "webpack-stats-plugin": "^1.0.3"
+    "electron-builder": "^23.0.3",
+    "pnpm": "^7.2.1",
+    "ts-node": "^10.8.1",
+    "typescript": "^4.7.3"
+  },
+  "build": {
+    "productName": "DreamplateElecton",
+    "appId": "org.nck.DreamplateElecton",
+    "asar": true,
+    "asarUnpack": "**\\*.{node,dll}",
+    "files": [
+    ],
+    "mac": {
+      "target": {
+        "target": "default",
+        "arch": [
+          "arm64",
+          "x64"
+        ]
+      },
+      "type": "distribution",
+      "hardenedRuntime": true,
+      "entitlements": "target/dist/entitlements.mac.plist",
+      "entitlementsInherit": "target/dist/entitlements.mac.plist",
+      "gatekeeperAssess": false
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 130,
+          "y": 220
+        },
+        {
+          "x": 410,
+          "y": 220,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "linux": {
+      "target": [
+        "AppImage",
+        "tar.xz"
+      ],
+      "icon": "target/dist/build_resources/icon.png",
+      "category": "Development"
+    },
+    "directories": {
+      "app": "target/dist",
+      "buildResources": "target/dist/build_resources",
+      "output": "target/release"
+    },
+    "extraResources": [
+      {
+        "from": "target/dist/",
+        "to": "app/",
+        "filter": ["!**/entitlements.mac.plist"]
+      }
+    ]
+  },
+  "collective": {
+    "url": "https://opencollective.com/electron-react-boilerplate-594"
   }
 }

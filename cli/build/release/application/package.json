@@ -1,0 +1,12 @@
+{
+  "name": "dreamplate",
+  "version": "1.0.0",
+  "description": "Dreamplate react boilerplate.",
+  "license": "MIT",
+  "author": {
+    "name": "Igor Syrotenko",
+    "email": "neloreck@gmail.com>"
+  },
+  "main": "./main.js",
+  "scripts": {}
+}

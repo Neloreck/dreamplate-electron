@@ -1,21 +1,218 @@
+/* eslint-disable */
+
 const path = require("path");
 
 const { createMacro } = require("babel-plugin-macros");
 
-const IS_DEV = (process.env.NODE_ENV === "development");
+const IS_DEV = process.env.NODE_ENV === "development";
 const PREFIX_COLOR = "color: #bada53";
 const EMOJI_LIST = [
-  "💀", "👽", "🔥", "✨", "🌟", "💫", "💥", "💢", "💦", "💧", "💤", "💨", "👀", "👊", "✊", "👟", "🌴", "🌲", "🌳",
-  "🌰", "🌱", "🌼", "🌐", "🌙", "⛄", "🌀", "🌈", "🌊", "🎍", "🎒", "🎓", "🎏", "🎆", "🎇", "🎐", "🎑", "🎃", "🎄", "🎁",
-  "🎋", "🎉", "🎊", "🎈", "🎌", "🔮", "🎥", "📷", "📹", "📼", "💿", "📀", "💽", "💾", "💻", "📱", "📠", "📡", "📺", "📻",
-  "🔊", "🔉", "🔈", "🔇", "🔔", "🔕", "📢", "📣", "⏳", "⌛", "⏰", "⌚", "🔓", "🔏", "🔐", "🔑", "🔎", "💡", "🔦", "🔆",
-  "🔌", "🔋", "🔍", "🛁", "🛀", "🚿", "🔧", "🔩", "🔨", "🚪", "🚬", "💣", "🔫", "🔪", "💊", "💉", "💰", "💴", "💵", "💷",
-  "💶", "📋", "📅", "📆", "📇", "📁", "📂", "📌", "📎", "🔬", "🔭", "📰", "🎨", "🎬", "🎤", "🎧", "🎼", "🎵", "🎶", "🎹",
-  "🎻", "🎺", "🎷", "🎸", "👾", "🎮", "🃏", "🎴", "🀄", "🎲", "🎯", "🏈", "🏀", "⚽", "⚾", "🎾", "🎱", "🏉", "🎳", "⛳",
-  "🚵", "🏁", "🏇", "🏆", "🎿", "🏂", "🏊", "🏄", "🎣", "🍵", "🍶", "🍼", "🍺", "🍻", "🍸", "🍹", "🍷", "🍴", "🍕",
-  "🍔", "🍟", "🍗", "🍖", "🍝", "🍛", "🍤", "🍱", "🍣", "🍥", "🍙", "🍘", "🍚", "🍜", "🍲", "🍢", "🍡", "🍳", "🍞", "🍩",
-  "🍮", "🍦", "🍨", "🍧", "🎂", "🍰", "🍪", "🍫", "🍬", "🍭", "🍯", "🍎", "🍏", "🍊", "🍋", "🍒", "🍇", "🍉", "🍓", "🍑",
-  "🍈", "🍌", "🍐", "🍍", "🍠", "🍆", "🍅", "🌽"
+  "💀",
+  "👽",
+  "🔥",
+  "✨",
+  "🌟",
+  "💫",
+  "💥",
+  "💢",
+  "💦",
+  "💧",
+  "💤",
+  "💨",
+  "👀",
+  "👊",
+  "✊",
+  "👟",
+  "🌴",
+  "🌲",
+  "🌳",
+  "🌰",
+  "🌱",
+  "🌼",
+  "🌐",
+  "🌙",
+  "⛄",
+  "🌀",
+  "🌈",
+  "🌊",
+  "🎍",
+  "🎒",
+  "🎓",
+  "🎏",
+  "🎆",
+  "🎇",
+  "🎐",
+  "🎑",
+  "🎃",
+  "🎄",
+  "🎁",
+  "🎋",
+  "🎉",
+  "🎊",
+  "🎈",
+  "🎌",
+  "🔮",
+  "🎥",
+  "📷",
+  "📹",
+  "📼",
+  "💿",
+  "📀",
+  "💽",
+  "💾",
+  "💻",
+  "📱",
+  "📠",
+  "📡",
+  "📺",
+  "📻",
+  "🔊",
+  "🔉",
+  "🔈",
+  "🔇",
+  "🔔",
+  "🔕",
+  "📢",
+  "📣",
+  "⏳",
+  "⌛",
+  "⏰",
+  "⌚",
+  "🔓",
+  "🔏",
+  "🔐",
+  "🔑",
+  "🔎",
+  "💡",
+  "🔦",
+  "🔆",
+  "🔌",
+  "🔋",
+  "🔍",
+  "🛁",
+  "🛀",
+  "🚿",
+  "🔧",
+  "🔩",
+  "🔨",
+  "🚪",
+  "🚬",
+  "💣",
+  "🔫",
+  "🔪",
+  "💊",
+  "💉",
+  "💰",
+  "💴",
+  "💵",
+  "💷",
+  "💶",
+  "📋",
+  "📅",
+  "📆",
+  "📇",
+  "📁",
+  "📂",
+  "📌",
+  "📎",
+  "🔬",
+  "🔭",
+  "📰",
+  "🎨",
+  "🎬",
+  "🎤",
+  "🎧",
+  "🎼",
+  "🎵",
+  "🎶",
+  "🎹",
+  "🎻",
+  "🎺",
+  "🎷",
+  "🎸",
+  "👾",
+  "🎮",
+  "🃏",
+  "🎴",
+  "🀄",
+  "🎲",
+  "🎯",
+  "🏈",
+  "🏀",
+  "⚽",
+  "⚾",
+  "🎾",
+  "🎱",
+  "🏉",
+  "🎳",
+  "⛳",
+  "🚵",
+  "🏁",
+  "🏇",
+  "🏆",
+  "🎿",
+  "🏂",
+  "🏊",
+  "🏄",
+  "🎣",
+  "🍵",
+  "🍶",
+  "🍼",
+  "🍺",
+  "🍻",
+  "🍸",
+  "🍹",
+  "🍷",
+  "🍴",
+  "🍕",
+  "🍔",
+  "🍟",
+  "🍗",
+  "🍖",
+  "🍝",
+  "🍛",
+  "🍤",
+  "🍱",
+  "🍣",
+  "🍥",
+  "🍙",
+  "🍘",
+  "🍚",
+  "🍜",
+  "🍲",
+  "🍢",
+  "🍡",
+  "🍳",
+  "🍞",
+  "🍩",
+  "🍮",
+  "🍦",
+  "🍨",
+  "🍧",
+  "🎂",
+  "🍰",
+  "🍪",
+  "🍫",
+  "🍬",
+  "🍭",
+  "🍯",
+  "🍎",
+  "🍏",
+  "🍊",
+  "🍋",
+  "🍒",
+  "🍇",
+  "🍉",
+  "🍓",
+  "🍑",
+  "🍈",
+  "🍌",
+  "🍐",
+  "🍍",
+  "🍠",
+  "🍆",
+  "🍅",
+  "🌽"
 ];
 
 /**
@@ -28,8 +225,8 @@ function getHashCode(target) {
     return hash;
   }
 
-  for (let it = 0; it < target.length; it ++) {
-    hash = ((hash << 5) - hash) + target.charCodeAt(it);
+  for (let it = 0; it < target.length; it++) {
+    hash = (hash << 5) - hash + target.charCodeAt(it);
     hash |= 0; // Convert to 32bit integer.
   }
 
@@ -40,7 +237,10 @@ function getHashCode(target) {
  * Get processed string for logger prefix.
  */
 function getCapitalLettersOrString(target) {
-  return (target.charAt(0).toUpperCase() + target.substring(1)).replace(/[a-z]/g, "") || target.toUpperCase();
+  return (
+    (target.charAt(0).toUpperCase() + target.substring(1)).replace(/[a-z]/g, "") ||
+    target.toUpperCase()
+  );
 }
 
 function log({ references, babel, state }) {
@@ -85,7 +285,7 @@ function log({ references, babel, state }) {
             types.newExpression(types.identifier("Date"), []),
             types.identifier("toLocaleTimeString")
           ),
-          [ types.stringLiteral("en-GB") ]
+          [types.stringLiteral("en-GB")]
         );
 
         const millisStringExpression = types.callExpression(
@@ -104,10 +304,7 @@ function log({ references, babel, state }) {
 
         const millisPaddedExpression = types.callExpression(
           types.memberExpression(millisStringExpression, types.identifier("padStart")),
-          [
-            types.numericLiteral(3),
-            types.stringLiteral("0")
-          ]
+          [types.numericLiteral(3), types.stringLiteral("0")]
         );
 
         const prefixExpression = types.callExpression(
@@ -115,7 +312,7 @@ function log({ references, babel, state }) {
           [
             timeExpression,
             types.stringLiteral(":"),
-            millisStringExpression,
+            millisPaddedExpression,
             types.stringLiteral(` [${prefixChar}${prefix.padEnd(3)}]`)
           ]
         );
@@ -123,11 +320,7 @@ function log({ references, babel, state }) {
         const logStatement = types.expressionStatement(
           types.callExpression(
             types.memberExpression(types.identifier("console"), types.identifier(method)),
-            [
-              prefixExpression,
-              types.stringLiteral(PREFIX_COLOR),
-              ...args
-            ]
+            [prefixExpression, types.stringLiteral(PREFIX_COLOR), ...args]
           )
         );
 

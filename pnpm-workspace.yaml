@@ -1,0 +1,8 @@
+packages:
+    - "."
+    - "cli/"
+    - "src/"
+    - "src/process"
+    - "src/renderer"
+    - "src/renderer/modules/*"
+

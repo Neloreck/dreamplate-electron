@@ -2,35 +2,26 @@ import * as path from "path";
 
 import { Configuration } from "webpack";
 
-import * as packageConfig from "../../../package.json";
-
 import {
   BUILD_CONFIGURATION_PATH,
-  PROJECT_ROOT_NODE_MODULES_PATH,
-  PROJECT_ROOT_PATH
+  PROJECT_ROOT_PATH,
+  CLI_PATH,
+  IS_PROFILING_ENABLED
 } from "./webpack.constants";
-function generateGlobalDependenciesAlias(): Record<string, string> {
-  return Object
-    .keys(packageConfig.dependencies)
-    .reduce((acc: Record<string, string>, pkg: string) =>
-      (acc[pkg] = path.resolve(PROJECT_ROOT_NODE_MODULES_PATH, pkg), acc), {});
-}
 
 export const RESOLVE_CONFIG: Configuration["resolve"] = {
   alias: {
     "#": path.resolve(BUILD_CONFIGURATION_PATH, "./"),
-    "@": path.resolve(PROJECT_ROOT_PATH, "src/renderer/"),
-    "~": path.resolve(PROJECT_ROOT_PATH, "src/main/"),
-    ...generateGlobalDependenciesAlias()
+    "@": path.resolve(PROJECT_ROOT_PATH, "src/"),
+    /**
+     * React DOM profiling mode switcher.
+     */
+    "react-dom$": IS_PROFILING_ENABLED ? "react-dom/profiling" : "react-dom"
   },
-  extensions: [
-    ".ts",
-    ".tsx",
-    ".js",
-    ".jsx",
-    ".json"
-  ],
-  modules: [
-    "node_modules"
-  ]
+  extensions: [ ".ts", ".tsx", ".js", ".jsx", ".json" ],
+  modules: [ "node_modules" ]
+};
+
+export const RESOLVE_LOADER_CONFIG: Configuration["resolveLoader"] = {
+  modules: [ path.resolve(CLI_PATH, "node_modules") ]
 };

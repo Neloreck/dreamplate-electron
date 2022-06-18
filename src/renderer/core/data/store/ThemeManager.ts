@@ -52,13 +52,13 @@ export class ThemeManager extends ContextManager<IThemeContext> {
   }
 
   /**
-   * Toggle application theme mode and save it into local storage.
+   * Toggle renderer theme mode and save it into local storage.
    * Apply it to document body.
    */
   public async toggleTheme(): Promise<void> {
     const { theme } = this.context;
 
-    const nextThemeType: TThemeType = (theme.palette.type === "light" ? "dark" : "light");
+    const nextThemeType: TThemeType = theme.palette.type === "light" ? "dark" : "light";
     const nextTheme: IApplicationTheme = toggleTheme(theme, nextThemeType);
 
     log.info(`Toggle theme mode to '${nextThemeType}'.`);
@@ -66,7 +66,7 @@ export class ThemeManager extends ContextManager<IThemeContext> {
     try {
       setLocalStorageItem("theme_type", nextThemeType);
     } catch (error) {
-      log.warn("Failed to cache application theme:", error);
+      log.warn("Failed to cache renderer theme:", error);
     }
 
     document.body.style.backgroundColor = nextTheme.palette.background.default;
@@ -86,9 +86,13 @@ export class ThemeManager extends ContextManager<IThemeContext> {
     if (key === encrypt("theme_type")) {
       // Listen to changes from all tabs.
       if (newValue) {
-        this.setContext({ theme: toggleTheme(theme, parse(newValue) === "dark" ? "dark" : "light") });
+        this.setContext({
+          theme: toggleTheme(theme, parse(newValue) === "dark" ? "dark" : "light")
+        });
       } else {
-        this.setContext({ theme: createDefaultTheme(GTheme.DEFAULT_THEME_TYPE) });
+        this.setContext({
+          theme: createDefaultTheme(GTheme.DEFAULT_THEME_TYPE)
+        });
       }
     }
   }

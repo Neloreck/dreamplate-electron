@@ -3,132 +3,91 @@
   },
   "scripts": {
     "help": {
-      "exec": "./cli/utils/print_commands_list.sh",
+      "exec": "./cli/scripts/print_commands_list.sh",
       "description": "Show help for all custom CLI commands list or only for provided arguments."
     },
     "setup": {
-      "exec": "npx lerna bootstrap",
+      "exec": "pnpm install",
       "description": "Setup project modules and install dependencies."
     },
     "clean": {
       "exec": "npx rimraf ./target && echo 'Cleaned up target directory.'",
       "description": "Remove project built assets."
     },
-    "clean-renderer": {
-      "exec": "npx rimraf ./target/dist/renderer && echo 'Cleaned up renderer directory.'",
-      "description": "Remove project built assets."
-    },
-    "clean-main": {
-      "exec": "npx rimraf ./target/dist/main && echo 'Cleaned up main directory.'",
-      "description": "Remove project built assets."
-    },
     "purge": {
       "exec": [
-        "./run clean",
-        "npx lerna clean -y "
+        "pnpm rimraf ./target",
+        "echo 'Dist purged'",
+        "pnpm rimraf ./node_modules ./src/node_modules ./src/application/modules/**/node_modules",
+        "echo 'Node modules purged'"
       ],
       "description": "Remove project built assets and purge all npm modules."
     },
-    "=============================================================================================================": "",
-    "watch-renderer-webpack": {
-      "exec": "ts-node --project ./cli/tsconfig.json ./cli/build/WatchRendererRunner.ts",
-      "private": true,
-      "description": "Start renderer watch."
-    },
-    "build-renderer-webpack": {
-      "exec": "./run clean-renderer && ts-node --project ./cli/tsconfig.json ./cli/build/BuildRendererRunner.ts",
-      "private": true,
-      "description": "Build project renderer and related source files. Following arguments can include module names."
-    },
-    "serve-renderer-webpack": {
-      "exec": "./run clean-renderer && ts-node --project ./cli/tsconfig.json ./cli/build/DevServerRenderRunner.ts",
-      "private": true,
-      "description": "Build project renderer and related source files. Following arguments can include module names."
-    },
-    "watch-renderer": {
-      "exec":"npx cross-env NODE_ENV=production ./run watch-renderer-webpack",
-      "description": "Build project renderer bundles in production mode."
-    },
-    "watch-renderer:dev": {
-      "exec":"npx cross-env NODE_ENV=development ./run watch-renderer-webpack",
-      "description": "Build project renderer bundles in dev mode."
-    },
-    "build-renderer": {
-      "exec":"npx cross-env NODE_ENV=production ANALYZE=true ./run build-renderer-webpack",
-      "description": "Build project renderer bundles in production mode."
-    },
-    "build-renderer:dev": {
-      "exec":"npx cross-env NODE_ENV=development ANALYZE=true ./run build-renderer-webpack",
-      "description": "Build project renderer bundles in dev mode."
-    },
-    "serve-renderer:dev": {
-      "exec":"npx cross-env NODE_ENV=development SERVER=true ./run serve-renderer-webpack",
-      "description": "Serve project renderer bundles in dev mode with webpack server."
-    },
-    "============================================================================================================": "=",
-    "watch-main-webpack": {
-      "exec": "ts-node --project ./cli/tsconfig.json ./cli/build/WatchMainRunner.ts",
-      "private": true,
-      "description": "Start main watch."
-    },
-    "build-main-webpack": {
-      "exec": "./run clean-main && ts-node --project ./cli/tsconfig.json ./cli/build/BuildMainRunner.ts",
-      "private": true,
-      "description": "Build project renderer and related source files. Following arguments can include module names."
-    },
-    "watch-main": {
-      "exec":"npx cross-env NODE_ENV=production ./run watch-main-webpack",
-      "description": "Build project main script in production mode."
-    },
-    "watch-main:dev": {
-      "exec":"npx cross-env NODE_ENV=development ./run watch-main-webpack",
-      "description": "Build project main script in dev mode."
-    },
-    "build-main": {
-      "exec":"npx cross-env NODE_ENV=production ./run build-main-webpack",
-      "description": "Build project main entry in production mode."
-    },
-    "build-main:dev": {
-      "exec":"npx cross-env NODE_ENV=development ./run build-main-webpack",
-      "description": "Build project main entry in dev mode."
-    },
-    "===========================================================================================================": "==",
-    "electron": {
-      "exec": "npx cross-env NODE_ENV=production electron ./target/dist/main/index.js",
-      "description": "Start electron app in production mode"
-    },
-    "electron:dev": {
-      "exec": "npx cross-env NODE_ENV=production electron ./target/dist/main/index.js",
-      "description": "Start electron app in dev mode"
-    },
-    "==========================================================================================================": "===",
+    "=============================================================================================================": "=",
     "package": {
       "exec": [
-        "./run build-main",
-        "./run build-renderer",
-        "echo 'todo;'"
+        "./run build-assets --packaged",
+        "pnpm electron-builder"
       ],
-      "description": "todo;"
+      "description": "Build application package."
     },
-    "=========================================================================================================": "====",
-    "verify": {
+    "package:dev": {
       "exec": [
-        "./run typecheck",
-        "./run test",
-        "./run lint"
+        "./run build-assets:dev --packaged",
+        "pnpm electron-builder"
       ],
+      "description": "Build application package."
+    },
+    "package-only": {
+      "exec": [
+        "pnpm electron-builder --dir"
+      ],
+      "description": "Build package only without assets step."
+    },
+    "spin-build-docker": {
+      "exec": "./cli/scripts/electron.sh spin-build-docker",
+      "description": "Spin up docker instance for cross-platform building."
+    },
+    "============================================================================================================": "==",
+    "electron": {
+      "exec":"./cli/scripts/electron.sh start",
+      "description": "Start electron app in production mode"
+    },
+    "build-assets": {
+      "exec":"./cli/scripts/webpack.sh build-assets-prod",
+      "description": "Build assets in production mode."
+    },
+    "build-assets:dev": {
+      "exec":"./cli/scripts/webpack.sh build-assets-dev",
+      "description": "Build assets in dev mode."
+    },
+    "watch-assets": {
+      "exec":"./cli/scripts/webpack.sh watch-assets-prod",
+      "description": "Watch assets in production mode."
+    },
+    "watch-assets:dev": {
+      "exec":"./cli/scripts/webpack.sh watch-assets-dev",
+      "description": "Watch assets in dev mode."
+    },
+    "========================================================================================================": "=====",
+    "verify": {
+      "exec": "./cli/scripts/verify.sh",
       "description": "Run full tests that include unit tests, linting and typechecks."
     },
     "test": {
-      "exec": "npx cross-env NODE_ENV=test ts-node --project ./cli/test/config/tsconfig.json ./cli/test/TestRunner.ts",
+      "exec": "./cli/scripts/verify.sh jest",
       "description": "Run jest unit tests."
     },
     "lint": {
-      "exec": "npx eslint -c ./src/.eslintrc.json --ignore-path ./src/.eslintignore src/**/*.ts src/**/*.tsx cli/**/*.ts",
+      "exec": "./cli/scripts/verify.sh lint",
       "description": "Run eslint for project codestyle checking."
     },
+    "format": {
+      "exec": "./cli/scripts/verify.sh format",
+      "description": "Run prettier combined with eslint to format codebase."
+    },
     "typecheck": {
-      "exec": "npx tsc -p src --noEmit",
+      "exec": "./cli/scripts/verify.sh typecheck",
       "description": "Run TS typechecks."
     }
   }

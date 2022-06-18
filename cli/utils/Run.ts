@@ -12,7 +12,7 @@ export function Run(shouldCall?: boolean) {
     } else if (isCalled) {
       throw new Error("Entrypoint: already called.");
     } else if (!targetClass.main) {
-      throw new Error("Entrypoint: not found entry - 'public static main(): void'.");
+      throw new Error("Entrypoint: not found entry - 'public static process(): void'.");
     }
   };
 }

@@ -17,7 +17,7 @@ import {
  * Default theme generation config.
  */
 
-export const DEFAULT_THEME_TYPE: "light" | "dark" = "light";
+export const DEFAULT_THEME_TYPE: "light" | "dark" = "dark";
 
 export const DEFAULT_SPACING_UNIT: number = 4;
 

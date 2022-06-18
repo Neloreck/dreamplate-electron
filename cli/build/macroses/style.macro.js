@@ -15,7 +15,9 @@ function handleUp(reference, types) {
     throw new Error("Styling macro requires sizing breakpoint as first parameter.");
   }
 
-  reference.parentPath.replaceWith(types.stringLiteral(`@media(min-width: ${BREAKPOINT[requiredArgument.value]}px)`));
+  reference.parentPath.replaceWith(
+    types.stringLiteral(`@media(min-width: ${BREAKPOINT[requiredArgument.value]}px)`)
+  );
 }
 
 function handleDown(reference, types) {
@@ -25,7 +27,9 @@ function handleDown(reference, types) {
     throw new Error("Styling macro requires sizing breakpoint as first parameter.");
   }
 
-  reference.parentPath.replaceWith(types.stringLiteral(`@media(max-width: ${BREAKPOINT[requiredArgument.value]}px)`));
+  reference.parentPath.replaceWith(
+    types.stringLiteral(`@media(max-width: ${BREAKPOINT[requiredArgument.value]}px)`)
+  );
 }
 
 function style({ references, babel }) {

@@ -1,26 +1,25 @@
 import { useManager } from "dreamstate";
 import { ReactElement, ReactNode, Suspense } from "react";
 import { JssProvider, ThemeProvider } from "react-jss";
-import { MemoryRouter as ReactRouter } from "react-router";
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 
-import { ThemeManager } from "@/core/data/store";
+import { RouterManager, ThemeManager } from "@/renderer/core/data/store";
 
 /**
- * Root provider for application.
+ * Root provider for renderer.
  */
 export function RootProvider({
   children = null as ReactNode,
-  themeContext: { theme } = useManager(ThemeManager)
+  themeContext: { theme } = useManager(ThemeManager),
+  routerContext: { history } = useManager(RouterManager)
 }): ReactElement {
   return (
-    <ReactRouter>
+    <HistoryRouter history={history}>
       <JssProvider id={ThemeManager.JSS_ID_GENERATION_CONFIG}>
         <ThemeProvider theme={theme}>
-          <Suspense fallback={<div> Loading </div>}>
-            { children }
-          </Suspense>
+          <Suspense fallback={<div> Loading </div>}>{children}</Suspense>
         </ThemeProvider>
       </JssProvider>
-    </ReactRouter>
+    </HistoryRouter>
   );
 }

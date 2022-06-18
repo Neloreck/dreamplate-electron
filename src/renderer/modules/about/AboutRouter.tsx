@@ -1,17 +1,14 @@
 import { ReactElement } from "react";
-import { Route, Switch } from "react-router";
+import { Route, Routes } from "react-router-dom";
 
-import { DefaultErrorFallback } from "@/core/view/layouts";
-import { AboutPage } from "@/modules/about/view/AboutPage";
+import { AboutPage } from "@/renderer/modules/about/view";
+import { ErrorPage } from "@/renderer/modules/error/view/pages";
 
 export function AboutRouter(): ReactElement {
   return (
-    <Switch>
-
-      <Route path={"/about"} component={AboutPage} exact={true}/>
-
-      <Route component={DefaultErrorFallback}/>
-
-    </Switch>
+    <Routes>
+      <Route path={"/about"} element={<AboutPage />} />
+      <Route element={<ErrorPage />} />
+    </Routes>
   );
 }

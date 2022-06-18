@@ -2,7 +2,7 @@ import * as path from "path";
 
 import * as React from "react";
 
-import { RUNTIME_CONSTANTS } from "../../build/config";
+import { RUNTIME_CONSTANTS, IS_COVERAGE_ENABLED } from "../../build/config";
 
 const ROOT_PATH: string = path.resolve(__dirname, "../../../");
 const BABEL_TRANSFORMER_PATH: string = path.resolve(__dirname, "./babel_transformer.ts");
@@ -13,12 +13,10 @@ export const JEST_CONFIG = {
   // browser: false,
   cacheDirectory: "<rootDir>/target/test/cache",
   clearMocks: true,
-  collectCoverage: true,
+  collectCoverage: IS_COVERAGE_ENABLED,
   // collectCoverageFrom: null,
   coverageDirectory: "<rootDir>/target/test/coverage",
-  coveragePathIgnorePatterns: [
-    "/node_modules/"
-  ],
+  coveragePathIgnorePatterns: [ "/node_modules/" ],
   globals: {
     ...RUNTIME_CONSTANTS,
     IS_TEST: true,
@@ -36,21 +34,11 @@ export const JEST_CONFIG = {
   // forceCoverageMatch: [],
   // globalSetup: null,
   // globalTeardown: null,
-  moduleDirectories: [
-    "node_modules"
-  ],
-  moduleFileExtensions: [
-    "ts",
-    "tsx",
-    "js",
-    "jsx",
-    "json",
-    "node"
-  ],
+  moduleDirectories: [ "node_modules" ],
+  moduleFileExtensions: [ "ts", "tsx", "js", "jsx", "json", "node" ],
   moduleNameMapper: {
-    "#/(.*)$": "<rootDir>/cli/build_renderer/$1",
-    "@/(.*)$": "<rootDir>/src/renderer/$1",
-    "~/(.*)$": "<rootDir>/src/main/$1",
+    "#/(.*)$": "<rootDir>/cli/build/$1",
+    "@/(.*)$": "<rootDir>/src/$1",
     "\\.(css|scss|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
       "<rootDir>/src/__test__/mocks/nonJSModule.js"
   },
@@ -64,28 +52,15 @@ export const JEST_CONFIG = {
   // resolver: null,
   // restoreMocks: false,
   rootDir: ROOT_PATH,
-  roots: [
-    "<rootDir>"
-  ],
+  roots: [ "<rootDir>" ],
   // runner: "jest-runner",
-  setupFiles: [
-    "<rootDir>/cli/test/config/setup_tests.ts"
-  ],
-  setupFilesAfterEnv: [
-  ],
-  snapshotSerializers: [
-    "enzyme-to-json/serializer"
-  ],
+  setupFiles: [ "<rootDir>/cli/test/config/setup_tests.ts" ],
+  setupFilesAfterEnv: [],
   testEnvironment: "jsdom",
   // testEnvironmentOptions: {},
   // testLocationInResults: false,
-  testMatch: [
-    "**/__tests__/**/*.ts?(x)",
-    "**/?(*.)+(spec|test).ts?(x)"
-  ],
-  testPathIgnorePatterns: [
-    "/node_modules/"
-  ],
+  testMatch: [ "**/__tests__/**/*.ts?(x)", "**/?(*.)+(spec|test).ts?(x)" ],
+  testPathIgnorePatterns: [ "/node_modules/" ],
   // testResultsProcessor: null,
   // testRunner: "jasmine2",
   // testURL: "about:blank",
@@ -93,9 +68,7 @@ export const JEST_CONFIG = {
   transform: {
     "^.+\\.(j|t)sx?$": BABEL_TRANSFORMER_PATH
   },
-  transformIgnorePatterns: [
-    "/node_modules/.+\\.js$"
-  ],
+  transformIgnorePatterns: [ "/node_modules/.+\\.js$" ],
   // unmockedModulePathPatterns: undefined,
   verbose: true
   // watchPathIgnorePatterns: [],
