@@ -87,8 +87,5 @@
         "filter": ["!**/entitlements.mac.plist"]
       }
     ]
-  },
-  "collective": {
-    "url": "https://opencollective.com/electron-react-boilerplate-594"
   }
 }
