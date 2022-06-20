@@ -15,11 +15,11 @@ describe("Theme context manager.", () => {
   it("Should toggle theme correctly.", () => {
     const manager: ThemeManager = mockManager(ThemeManager);
 
-    expect(manager.context.theme.palette.type).toBe("light");
+    expect(manager.context.theme.palette.type).toBe("dark");
 
     manager.toggleTheme();
 
-    expect(manager.context.theme.palette.type).toBe("dark");
+    expect(manager.context.theme.palette.type).toBe("light");
   });
 
   it("Should load preset from local storage.", () => {

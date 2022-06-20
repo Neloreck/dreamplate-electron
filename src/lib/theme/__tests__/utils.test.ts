@@ -5,7 +5,7 @@ describe("Theming utils should work properly.", () => {
   it("Should correctly create default theme based on default colors.", () => {
     const theme: IApplicationTheme = createDefaultTheme(GTheme.DEFAULT_THEME_TYPE);
 
-    expect(GTheme.DEFAULT_THEME_TYPE).toBe("light");
+    expect(GTheme.DEFAULT_THEME_TYPE).toBe("dark");
 
     expect(theme.palette.type).toBe(GTheme.DEFAULT_THEME_TYPE);
 
@@ -17,11 +17,11 @@ describe("Theming utils should work properly.", () => {
     expect(theme.palette.secondary.main).toBe(GTheme.DEFAULT_SECONDARY_MAIN);
     expect(theme.palette.secondary.dark).toBe(GTheme.DEFAULT_SECONDARY_DARK);
 
-    expect(theme.palette.background.default).toBe(GTheme.DEFAULT_BACKGROUND_LIGHT);
-    expect(theme.palette.background.paper).toBe(GTheme.DEFAULT_BACKGROUND_PAPER_LIGHT);
+    expect(theme.palette.background.default).toBe(GTheme.DEFAULT_BACKGROUND_DARK);
+    expect(theme.palette.background.paper).toBe(GTheme.DEFAULT_BACKGROUND_PAPER_DARK);
 
-    expect(theme.palette.text.primary).toBe(GTheme.DEFAULT_TEXT_PRIMARY_LIGHT);
-    expect(theme.palette.text.secondary).toBe(GTheme.DEFAULT_TEXT_SECONDARY_LIGHT);
+    expect(theme.palette.text.primary).toBe(GTheme.DEFAULT_TEXT_PRIMARY_DARK);
+    expect(theme.palette.text.secondary).toBe(GTheme.DEFAULT_TEXT_SECONDARY_DARK);
 
     expect(theme.spacing.unit).toBe(GTheme.DEFAULT_SPACING_UNIT);
   });
